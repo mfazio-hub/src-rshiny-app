@@ -3,9 +3,11 @@ library(tidyverse)
 library(dataRetrieval)
 library(bslib)
 library(reactable)
+library(leaflet)
 
 
-df <- readxl::read_excel("C:/Users/michaelf/PythonProjects/wq-app/data/processed/wq_data_processed.xlsx")
+df <- readxl::read_excel("data/wq_data_processes.xlsx")
+sites <- readxl::read_excel("data/wq_sites.xls")
 
 #TODO: convert date from dateTime to date only
 #TODO: round all numerical data to 3 decimals
@@ -37,6 +39,12 @@ ui <- page_sidebar(
   
   
   mainPanel(
+    
+    card(
+      leafletOutput("map")
+    ),
+    
+    
     card(
       plotOutput("boxplot"),
       
@@ -45,6 +53,7 @@ ui <- page_sidebar(
                     value = TRUE
                     )
       ),
+    
     card(reactableOutput("table"))
     
   )
@@ -57,13 +66,19 @@ server <- function(input, output, session) {
   
   #req(input$sites) # require at least one site to be selected
   
+  output$map <- renderLeaflet({
+    leaflet() %>%
+      addTiles() %>%
+      setView(-87.044831, 30.367050, zoom = 12)
+  })
+  
   output$boxplot <- renderPlot({
       ggplot(filtered_data(), aes(x = SiteID, y = .data[[input$var]])) +
       geom_boxplot(outliers = input$outliers) +
       labs(x = "Sites", y = input$var, title = paste("Boxplot of", input$var, "by Site")) 
   })
   
-  output$table <- renderReactable({reactable(filtered_data())})
+  output$table <- renderReactable({reactable(filtered_data(), defaultPageSize = 5)})
    
 
 

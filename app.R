@@ -43,8 +43,7 @@ ui <- page_sidebar(
 
 server <- function(input, output, session) {
   filtered_data <- reactive({
-    df %>% filter(SiteID %in% input$sites)
-    df %>% filter(RelativeDepth %in% input$depth)
+    df %>% filter(SiteID %in% input$sites & RelativeDepth %in% input$depth)
   })
   
   #req(input$sites) # require at least one site to be selected

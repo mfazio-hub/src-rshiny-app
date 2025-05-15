@@ -69,7 +69,15 @@ server <- function(input, output, session) {
   output$map <- renderLeaflet({
     leaflet() %>%
       addTiles() %>%
-      setView(-87.044831, 30.367050, zoom = 12)
+      setView(-87.044831, 30.367050, zoom = 12) %>%
+      addMarkers(
+        data = sites,
+        lng = ~Long,
+        lat = ~Lat,
+        popup = ~paste("<h6><b>Site ID: </b>", Site_ID, 
+                       "<br><b>Description: </b>", Desc_),
+        label = ~Site_ID
+      )
   })
   
   output$boxplot <- renderPlot({

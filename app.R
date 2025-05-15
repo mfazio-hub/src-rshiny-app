@@ -6,7 +6,8 @@ library(reactable)
 library(leaflet)
 
 
-df <- readxl::read_excel("C:/Users/michaelf/PythonProjects/wq-app/data/processed/wq_data_processed.xlsx")
+df <- readxl::read_excel("data/wq_data_processes.xlsx")
+sites <- readxl::read_excel("data/wq_sites.xls")
 
 #TODO: convert date from dateTime to date only
 #TODO: round all numerical data to 3 decimals

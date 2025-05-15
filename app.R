@@ -7,6 +7,8 @@ library(reactable)
 
 df <- readxl::read_excel("C:/Users/michaelf/PythonProjects/wq-app/data/processed/wq_data_processed.xlsx")
 
+#TODO: convert date from dateTime to date only
+#TODO: round all numerical data to 3 decimals
 
 ui <- page_sidebar(
   title = "SRC Water Quality Portal",

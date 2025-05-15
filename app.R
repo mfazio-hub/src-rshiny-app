@@ -6,7 +6,7 @@ library(reactable)
 library(leaflet)
 
 
-df <- readxl::read_excel("data/wq_data_processes.xlsx")
+df <- readxl::read_excel("data/wq_data_processed.xlsx")
 sites <- readxl::read_excel("data/wq_sites.xls")
 
 #TODO: convert date from dateTime to date only

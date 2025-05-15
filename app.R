@@ -2,6 +2,7 @@ library(shiny)
 library(tidyverse)
 library(dataRetrieval)
 library(bslib)
+library(reactable)
 
 
 df <- readxl::read_excel("C:/Users/michaelf/PythonProjects/wq-app/data/processed/wq_data_processed.xlsx")
@@ -32,7 +33,8 @@ ui <- page_sidebar(
   
   
   mainPanel(
-    card(plotOutput("boxplot"))
+    card(plotOutput("boxplot")),
+    card(reactableOutput("table"))
     
   )
 )
@@ -51,8 +53,12 @@ server <- function(input, output, session) {
       labs(x = "Sites", y = input$var, title = paste("Boxplot of", input$var, "by Site")) 
   })
   
+  output$table <- renderReactable({reactable(filtered_data())})
+   
+
+
 }
 
-shinyApp(ui, server)
+  shinyApp(ui, server)
 
 

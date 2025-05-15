@@ -30,12 +30,21 @@ ui <- page_sidebar(
             radioButtons("depth",
                          label = "Select Depth",
                          choices = unique(df$RelativeDepth)
-            )
+            ),
+            
+            
     ),
   
   
   mainPanel(
-    card(plotOutput("boxplot")),
+    card(
+      plotOutput("boxplot"),
+      
+      checkboxInput("outliers",
+                    label = "Include Outliers",
+                    value = TRUE
+                    )
+      ),
     card(reactableOutput("table"))
     
   )
@@ -50,7 +59,7 @@ server <- function(input, output, session) {
   
   output$boxplot <- renderPlot({
       ggplot(filtered_data(), aes(x = SiteID, y = .data[[input$var]])) +
-      geom_boxplot() +
+      geom_boxplot(outliers = input$outliers) +
       labs(x = "Sites", y = input$var, title = paste("Boxplot of", input$var, "by Site")) 
   })
   

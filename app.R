@@ -84,7 +84,8 @@ server <- function(input, output, session) {
       ggplot(filtered_data(), aes(x = SiteID, y = .data[[input$var]])) +
       geom_boxplot(outliers = input$outliers) +
       labs(x = "Sites", y = input$var, title = paste("Boxplot of", input$var, "by Site")) 
-  })
+    })
+    
   
   output$table <- renderReactable({reactable(filtered_data(), defaultPageSize = 5)})
    
